@@ -29,6 +29,7 @@ function Description({ product, isAuthenticated }) {
 	const [isInWishlist, setIsInWishlist] = useState(false);
 	const [isInCart, setIsInCart] = useState(false);
 	const [reviews, setReviews] = useState([]);
+	const [averageRating, setAverageRating] = useState(0); // Збереження середнього рейтингу
 	const [currentUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
 	const [selectedSize, setSelectedSize] = useState('');
 	const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
@@ -36,18 +37,20 @@ function Description({ product, isAuthenticated }) {
 	useEffect(() => {
 		const savedReviews = JSON.parse(localStorage.getItem(`reviews_${product.id}`) || '[]');
 		setReviews(savedReviews);
+		calculateAverageRating(savedReviews); // Обрахування середньго рейтингу
 
 		const savedCart = JSON.parse(localStorage.getItem('cart') || '[]');
 		setIsInCart(savedCart.some(item => item.id === product.id));
-
-		const handleCartUpdate = () => {
-			const updatedCart = JSON.parse(localStorage.getItem('cart') || '[]');
-			setIsInCart(updatedCart.some(item => item.id === product.id));
-		};
-
-		window.addEventListener('cartUpdated', handleCartUpdate);
-		return () => window.removeEventListener('cartUpdated', handleCartUpdate);
 	}, [product.id]);
+
+	const calculateAverageRating = (reviews) => {  // функція для обрахування середньго рейтингу
+		if (reviews.length === 0) {
+			setAverageRating(0);
+			return;
+		}
+		const total = reviews.reduce((sum, review) => sum + review.rating, 0);
+		setAverageRating(total / reviews.length);
+	};
 
 	const handleSizeChange = (event) => {
 		setSelectedSize(event.target.value);
@@ -87,8 +90,6 @@ function Description({ product, isAuthenticated }) {
 			localStorage.setItem('cart', JSON.stringify(updatedCart));
 			setIsInCart(true);
 		}
-
-		window.dispatchEvent(new Event('cartUpdated'));
 	};
 
 	const handleWishlistClick = () => {
@@ -121,14 +122,7 @@ function Description({ product, isAuthenticated }) {
 
 		setRating(0);
 		setComment('');
-	};
-
-	const getInitials = (name) => {
-		return name
-			.split(' ')
-			.map(word => word[0])
-			.join('')
-			.toUpperCase();
+		calculateAverageRating(updatedReviews);
 	};
 
 	const formatDate = (dateString) => {
@@ -164,11 +158,12 @@ function Description({ product, isAuthenticated }) {
 						<Typography variant="h4" component="h1">
 							{product.name}
 						</Typography>
-
-						<Typography variant="h5" className="price">
-							${product.price}
-						</Typography>
+						<Rating value={averageRating} readOnly precision={0.1} />
 					</div>
+
+					<Typography variant="h5" className="price">
+						${product.price}
+					</Typography>
 
 					<Typography variant="body1" className="description">
 						{product.description}
@@ -207,10 +202,7 @@ function Description({ product, isAuthenticated }) {
 							onClick={handleWishlistClick}
 							className="wishlist-btn"
 						>
-							{isInWishlist ?
-								<FavoriteIcon color="error" /> :
-								<FavoriteBorderIcon />
-							}
+							{isInWishlist ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />}
 						</IconButton>
 					</Box>
 
@@ -219,8 +211,7 @@ function Description({ product, isAuthenticated }) {
 					<Box className="review-section">
 						<Typography variant="h6" className="review-title">
 							<RateReviewIcon />
-							Customer Reviews
-							<span className="review-count">({reviews.length})</span>
+							Customer Reviews ({reviews.length})
 						</Typography>
 
 						{isAuthenticated ? (
@@ -251,45 +242,30 @@ function Description({ product, isAuthenticated }) {
 								</Button>
 							</Box>
 						) : (
-							<Box className="login-prompt">
-								<Typography variant="body1">
-									Please login to leave a review
-								</Typography>
-								<Button
-									onClick={() => navigate('/login')}
-									variant="contained"
-								>
-									Login
-								</Button>
-							</Box>
+							<Typography variant="body1">
+								Please login to leave a review.
+							</Typography>
 						)}
-
-						<div className="reviews-list">
-							{reviews.map((review) => (
-								<div key={review.id} className="review-item">
-									<div className="review-header">
-										<div className="reviewer-info">
-											<div className="reviewer-avatar">
-												{getInitials(review.userName)}
-											</div>
-											<div>
-												<Typography className="reviewer-name">
-													{review.userName}
-												</Typography>
-												<Rating value={review.rating} readOnly size="small" />
-											</div>
-										</div>
-										<Typography className="review-date">
-											{formatDate(review.date)}
-										</Typography>
-									</div>
-									<Typography className="review-content">
-										{review.comment}
-									</Typography>
-								</div>
-							))}
-						</div>
 					</Box>
+						<Box className="reviews-list">
+    						{reviews.map((review) => (
+        					<div key={review.id} className="review-item">
+            				<div className="review-header">
+                		<Typography className="reviewer-name">
+                    		{review.userName}
+                		</Typography>
+                			<Rating value={review.rating} readOnly size="small" />
+                		<Typography className="review-date">
+                    			{formatDate(review.date)}
+                		</Typography>
+            				</div>
+            			<Typography className="review-content">
+                			{review.comment}
+            			</Typography>
+        					</div>
+    					))}
+					</Box>
+
 				</Box>
 			</Paper>
 		</div>
