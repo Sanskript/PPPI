@@ -1,0 +1,38 @@
+.slider-container {
+		position: relative;
+			height: 600px;
+			overflow: hidden;
+}
+
+.slider-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Зберегти пропорції зображення */
+    object-position: top; /* Вирівнювання зображення по верхньому краю */
+    transition: opacity 0.5s ease-in-out; /* Анімація переходу */
+}
+
+.arrow-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10; 
+}
+
+.arrow-button:hover {
+    background-color: rgba(0, 0, 0, 0.8); 
+}
+
+.left-arrow {
+    left: 10px;
+}
+
+.right-arrow {
+    right: 10px; 
+} 

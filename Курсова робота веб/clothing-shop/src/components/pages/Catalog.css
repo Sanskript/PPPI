@@ -1,0 +1,126 @@
+.catalog-container {
+    padding: 20px;
+    min-height: calc(100vh - 60px);
+    background: #121212;
+}
+
+.catalog-container h1 {
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    justify-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.catalog-filters {
+    max-width: 1200px;
+    margin: 0 auto 30px;
+    padding: 20px;
+    background: #1e1e1e;
+    border-radius: 8px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Контейнер для основних фільтрів */
+.filters-group {
+    display: flex;
+    gap: 15px;
+    flex: 1;
+    max-width: 800px;
+}
+
+.catalog-filters input[type="text"],
+.catalog-filters select {
+    padding: 8px 15px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background: #2a2a2a;
+    color: #fff;
+    font-size: 14px;
+    height: 40px;
+    flex: 1;
+    min-width: 180px;
+    max-width: 250px;
+}
+
+/* Стилі для цінового діапазону */
+.price-range {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    min-width: 220px;
+}
+
+.price-range input[type="number"] {
+    width: 100px;
+    padding: 8px;
+    height: 40px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background: #2a2a2a;
+    color: #fff;
+}
+
+/* Кнопка скидання */
+.reset-filters-btn {
+    padding: 8px 20px;
+    height: 40px;
+    background: #2a2a2a;
+    color: white;
+    border: 1px solid #333;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.reset-filters-btn:hover {
+    background: #333;
+    border-color: #4a4a4a;
+}
+
+@media (max-width: 1200px) {
+    .catalog-filters {
+        flex-wrap: wrap;
+    }
+
+    .filters-group {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 768px) {
+    .catalog-filters {
+        gap: 12px;
+    }
+
+    .filters-group {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .catalog-filters input[type="text"],
+    .catalog-filters select {
+        max-width: 100%;
+    }
+
+    .price-range {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .reset-filters-btn {
+        width: 100%;
+    }
+} 

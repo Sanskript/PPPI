@@ -1,0 +1,23 @@
+.numberCounter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem; 
+    color: #fff; 
+    background-color: #000; 
+    transition: color 0.5s ease; 
+    flex-direction: column;
+} 
+
+.gradientText {
+    background: linear-gradient(10deg, #740000,#ff0000,#9e0909, #df0303, #4d0000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+		margin-bottom: 0;
+}
+
+.numberCounter p{
+    font-size: 2rem;
+		margin-bottom: 200px;
+} 
+

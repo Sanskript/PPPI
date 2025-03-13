@@ -1,0 +1,106 @@
+.login-container {
+	background-color: #000000;
+	padding: 10px;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	width: 400px;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+		background: rgba(255, 255, 255, 0.658);
+			backdrop-filter: blur(15px);
+			border-radius: 8px;
+			width: 350px;
+			height: 400px;
+			border: 1px solid rgba(255, 255, 255, 0.336);
+}
+
+.login-container h2 {
+	text-align: center;
+	margin-bottom: 20px;
+	color: #000;
+}
+
+.login-container .form-group {
+	margin-bottom: 15px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+input {
+	width: 250px;
+	padding: 10px;
+	border: 1px solid #000000;
+	border-radius: 4px;
+}
+
+.error-message-login {
+	color: rgb(255, 0, 0);
+	font-size: 0.875em;
+
+}
+
+.login-container .submit-button {
+	width: 100%;
+	padding: 10px;
+	background-color: #000000;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+		border: 1px solid rgb(255, 255, 255);
+}
+
+.login-container .submit-button:hover {
+	background-color: #ffffff;
+	color: #000;
+	font-weight: bold;
+}
+
+.close-button {
+	margin-top: 10px;
+	background: none;
+	border: none;
+	color: #000000;
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+
+
+/* .modal>div {
+	background: rgba(255, 255, 255, 0.658);
+	backdrop-filter: blur(15px);
+	border-radius: 8px;
+	width: 350px;
+	height: 400px;
+	border: 1px solid rgba(255, 255, 255, 0.336);
+} */
+
+.sign-up-prompt {
+	margin-top: 20px;
+	color: rgb(0, 0, 0);
+	text-align: center;
+}
+
+.sign-up-link {
+	color: black;
+	cursor: pointer;
+}
+
+.login-container .login-container .form-group {
+	margin-bottom: 15px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+

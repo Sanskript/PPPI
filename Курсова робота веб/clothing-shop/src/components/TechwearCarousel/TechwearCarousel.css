@@ -1,0 +1,136 @@
+.techwear-block {
+    display: flex;
+    align-items: center;
+		justify-content: center;
+    background-color: #1a1919;
+    color: #fff; 
+    padding: 2rem;
+}
+
+/* .techwear-image {
+    width: 30%;
+    height: auto;
+    border-radius: 8px;
+} */
+
+.techwear-image {
+	width: 30%;
+	height: 500px;
+	border-radius: 8px;
+	object-fit: cover;
+}
+
+.techwear-content {
+    width: 30%;
+    padding-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.techwear-title {
+    font-size: 2rem;
+		text-align: left;
+		/* margin-top: -40px; */
+}
+
+.techwear-text {
+    font-size: 1rem;
+    text-align: left;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .techwear-title {
+        font-size: 1.5rem;
+    }
+
+    .techwear-text {
+        font-size: 0.9rem;
+    }
+} 
+
+.step-button{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #1a1919;
+	padding: 0 0 2rem;
+	gap: 1rem;
+}
+
+.step-button button {
+    background-color: #1a1919;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.step-button button:hover {
+    background-color: #fff;
+    color: #1a1919;
+}
+
+.step-button button:disabled {
+    background-color: #555;
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.stepper-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.step {
+    padding: 10px;
+    cursor: pointer;
+}
+
+
+.stepper {
+	padding-top: 50px;
+	background-color: #1a1919;
+}
+
+.stepper .MuiStepLabel-label.Mui-active {
+	font-weight: bold;
+		color: #fff;
+}
+
+.stepper .MuiStepIcon-root {
+	color: #6b6a6a;
+}
+
+
+.stepper .MuiStepIcon-root.Mui-completed {
+	color: #ffffff;
+}
+
+/* .stepper .MuiStepIcon-text {
+	fill: #000000;
+} */
+
+.stepper .MuiStepIcon-text.Mui-active {
+	fill: #000000;
+}
+
+.stepper .MuiStepIcon-text.Mui-completed {
+	fill: #000000;
+}
+
+.title {
+	color: #fff;
+}
+
+/* .stepper .MuiStepIcon-root {
+	fill: rgb(0, 0, 0);
+} */
+
+.stepper .MuiStepIcon-root.Mui-active {
+	color: #000000;
+}
+

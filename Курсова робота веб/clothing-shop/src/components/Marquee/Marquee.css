@@ -1,0 +1,26 @@
+.marquee {
+    background-color: #333; 
+    color: #00ffcc; 
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    height: 30px; 
+}
+
+.marquee-content {
+    display: inline-block;
+    animation: marquee 1800s linear infinite; 
+}
+
+.marquee-content span {
+    margin-right: 100px; 
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0); 
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+} 

@@ -1,0 +1,335 @@
+.checkout-form-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    color: #fff;
+}
+
+.checkout-form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.total-amount {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #2a2a2a;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group h3 {
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.input-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #2a2a2a;
+    color: #fff;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+input.error {
+    border-color: #f44336;
+}
+
+.error-message {
+    color: #f44336;
+    font-size: 12px;
+    margin-top: -8px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.card-details, .address-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.cancel-button, .submit-button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 150px;
+}
+
+.cancel-button {
+    background-color: #424242;
+    color: #fff;
+}
+
+.submit-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.cancel-button:hover {
+    background-color: #616161;
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+}
+
+.cancel-button:disabled,
+.submit-button:disabled {
+    background-color: #666;
+    cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+    .card-details, .address-details {
+        grid-template-columns: 1fr;
+    }
+
+    .form-buttons {
+        flex-direction: column;
+    }
+
+    .cancel-button, .submit-button {
+        width: 100%;
+    }
+}
+
+.success-modal-content {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.success-modal-content .success-icon {
+    font-size: 48px;
+    color: #52c41a;
+    margin-bottom: 16px;
+}
+
+.success-modal-content h3 {
+    color: #262626;
+    margin-bottom: 16px;
+}
+
+.success-modal-content p {
+    color: #595959;
+    margin-bottom: 8px;
+}
+
+/* Стилізація модального вікна Ant Design */
+.ant-modal-content {
+    border-radius: 8px;
+}
+
+.ant-modal-header {
+    border-radius: 8px 8px 0 0;
+}
+
+.ant-modal-title {
+    font-size: 18px;
+    color: #262626;
+}
+
+.ant-modal-footer {
+    border-radius: 0 0 8px 8px;
+}
+
+.ant-modal-footer .ant-btn-primary {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+.ant-modal-footer .ant-btn-primary:hover {
+    background-color: #45a049;
+    border-color: #45a049;
+}
+
+/* Анімація для іконки */
+@keyframes checkmark {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.success-icon {
+    animation: checkmark 0.5s ease-in-out;
+}
+
+/* Стилі для оверлею завантаження */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-overlay .ant-spin {
+    margin-bottom: 16px;
+}
+
+.loading-overlay p {
+    color: white;
+    font-size: 18px;
+    margin: 0;
+}
+
+/* Стилі для іконки завантаження */
+.anticon-loading {
+    color: #4CAF50;
+}
+
+/* Стилі для модального вікна успіху */
+.success-modal .ant-modal-content {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.success-modal .success-modal-content {
+    text-align: center;
+    padding: 24px 0;
+}
+
+.success-modal .success-icon {
+    font-size: 64px;
+    color: #52c41a;
+    margin-bottom: 24px;
+    animation: checkmark 0.5s ease-in-out;
+}
+
+.success-modal h3 {
+    font-size: 24px;
+    color: #262626;
+    margin-bottom: 16px;
+}
+
+.success-modal p {
+    font-size: 16px;
+    color: #595959;
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+/* Анімація для іконки успіху */
+@keyframes checkmark {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Стилі для кнопок модального вікна */
+.success-modal .ant-modal-footer .ant-btn-primary {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+    height: 40px;
+    padding: 0 24px;
+    font-size: 16px;
+}
+
+.success-modal .ant-modal-footer .ant-btn-primary:hover {
+    background-color: #45a049;
+    border-color: #45a049;
+}
+
+/* Адаптивність для мобільних пристроїв */
+@media (max-width: 480px) {
+    .success-modal .ant-modal-content {
+        margin: 0 16px;
+    }
+
+    .success-modal .success-icon {
+        font-size: 48px;
+    }
+
+    .success-modal h3 {
+        font-size: 20px;
+    }
+
+    .success-modal p {
+        font-size: 14px;
+    }
+}
+
+/* Стилі для модального вікна */
+.success-modal {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+.success-modal .ant-modal-content {
+    background: #fff !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Переконаємося, що модальне вікно завжди поверх інших елементів */
+.ant-modal-mask,
+.ant-modal-wrap {
+    z-index: 1001 !important;
+}
+
+/* Стилі для оверлею */
+.ant-modal-mask {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+} 
