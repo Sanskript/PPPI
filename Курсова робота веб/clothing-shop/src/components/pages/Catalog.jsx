@@ -17,27 +17,33 @@ const Catalog = ({ onAddToCart, onAddToWishlist }) => {
         filterAndSortProducts();
     }, [products, searchQuery, selectedCategory, sortBy, priceRange]);
 
-    const filterAndSortProducts = () => {
-        let filtered = [...products];
+    const calculateAverageRating = (productId) => {   // Обрахування середньго рейтнгу
+        const reviews = JSON.parse(localStorage.getItem(`reviews_${productId}`) || '[]');
+        if (reviews.length === 0) return 0;
+        const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+        return totalRating / reviews.length;
+    };
 
-        // Фільтрація за пошуком
+    const filterAndSortProducts = () => {
+        let filtered = products.map(product => ({
+            ...product,
+            averageRating: calculateAverageRating(product.id)
+        }));
+
         if (searchQuery) {
             filtered = filtered.filter(product =>
                 product.name.toLowerCase().includes(searchQuery.toLowerCase())
             );
         }
 
-        // Фільтрація за категорією
         if (selectedCategory !== 'all') {
             filtered = filtered.filter(product => product.category === selectedCategory);
         }
 
-        // Фільтрація за ціною
         filtered = filtered.filter(product =>
             product.price >= priceRange.min && product.price <= priceRange.max
         );
 
-        // Сортування
         switch (sortBy) {
             case 'name-asc':
                 filtered.sort((a, b) => a.name.localeCompare(b.name));
@@ -50,6 +56,9 @@ const Catalog = ({ onAddToCart, onAddToWishlist }) => {
                 break;
             case 'price-desc':
                 filtered.sort((a, b) => b.price - a.price);
+                break;
+            case 'rating-desc':
+                filtered.sort((a, b) => b.averageRating - a.averageRating); // Сортування по рейтингу
                 break;
             default:
                 break;
@@ -99,6 +108,7 @@ const Catalog = ({ onAddToCart, onAddToWishlist }) => {
                         <option value="name-desc">Z to A</option>
                         <option value="price-asc">Price: Low to High</option>
                         <option value="price-desc">Price: High to Low</option>
+                        <option value="rating-desc">Highest Rated</option>
                     </select>
 
                     <div className="price-range">
@@ -132,6 +142,7 @@ const Catalog = ({ onAddToCart, onAddToWishlist }) => {
                         product={product}
                         onAddToCart={onAddToCart}
                         onAddToWishlist={onAddToWishlist}
+                        averageRating={product.averageRating}
                     />
                 ))}
             </div>
