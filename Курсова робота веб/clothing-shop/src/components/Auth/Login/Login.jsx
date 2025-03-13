@@ -1,6 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { IconButton } from '@mui/material';
+import { IconButton, CircularProgress } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import './Login.css';
 import { useState } from 'react';
@@ -10,47 +10,54 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = ({ onClose, onLogin }) => {
 	const navigate = useNavigate();
+	const [isLoading, setIsLoading] = useState(false);
+	const [isLogin, setIsLogin] = useState(true);
+
 	const initialValues = { email: '', password: '' };
 	const validationSchema = Yup.object({
 		email: Yup.string().email('Invalid email format').required('Required field'),
 		password: Yup.string().required('Required field'),
 	});
 
-	const [isLogin, setIsLogin] = useState(true);
-
 	const handleToggleForm = () => {
 		setIsLogin(!isLogin);
 	};
 
 	const handleSubmit = async (values) => {
-		try {
-			const response = await axios.post("http://localhost:5000/api/auth/login", values);
-			if (response.status === 200) {
-				console.log('Login response:', response.data);
-				const userData = {
-					id: response.data.id,
-					email: response.data.email,
-					firstName: response.data.firstName,
-					lastName: response.data.lastName,
-					phone: response.data.phone,
-					role: response.data.role,
-					memberSince: response.data.memberSince,
-					purchaseCount: response.data.purchaseCount,
-					deliveryAddress: response.data.deliveryAddress,
-					bankDetails: response.data.bankDetails,
-					orderHistory: response.data.orderHistory
-				};
-				onLogin(userData);
-				onClose();
-				navigate('/catalog');
+		setIsLoading(true);
+
+		setTimeout(async () => {
+			try {
+				const response = await axios.post("http://localhost:5000/api/auth/login", values);
+				if (response.status === 200) {
+					console.log('Login response:', response.data);
+					const userData = {
+						id: response.data.id,
+						email: response.data.email,
+						firstName: response.data.firstName,
+						lastName: response.data.lastName,
+						phone: response.data.phone,
+						role: response.data.role,
+						memberSince: response.data.memberSince,
+						purchaseCount: response.data.purchaseCount,
+						deliveryAddress: response.data.deliveryAddress,
+						bankDetails: response.data.bankDetails,
+						orderHistory: response.data.orderHistory
+					};
+					onLogin(userData);
+					onClose();
+					navigate('/catalog');
+				}
+			} catch (error) {
+				if (error.response && error.response.status === 401) {
+					alert("Invalid login data. Please try to register.");
+				} else {
+					console.error("Login error", error);
+				}
+			} finally {
+				setIsLoading(false);
 			}
-		} catch (error) {
-			if (error.response && error.response.status === 401) {
-				alert("Invalid login data. Please try to register.");
-			} else {
-				console.error("Login error", error);
-			}
-		}
+		}, 3000); 
 	};
 
 	return (
@@ -73,7 +80,9 @@ const Login = ({ onClose, onLogin }) => {
 								<Field name="password" type="password" placeholder="Password" />
 								<ErrorMessage name="password" component="div" className="error-message-login" />
 							</div>
-							<button type="submit" className="submit-button">Log In</button>
+							<button type="submit" className="submit-button" disabled={isLoading}>
+								{isLoading ? <CircularProgress size={24} color="inherit" /> : "Log In"}
+							</button>
 						</Form>
 					</Formik>
 				</div>
