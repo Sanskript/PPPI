@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'; 
 import axios from 'axios';
 import ProductCard from '../Card/ProductCard';
 import './Catalog.css';
@@ -17,11 +17,32 @@ const Catalog = ({ onAddToCart, onAddToWishlist }) => {
         filterAndSortProducts();
     }, [products, searchQuery, selectedCategory, sortBy, priceRange]);
 
-    const calculateAverageRating = (productId) => {   // Обрахування середньго рейтнгу
+    const calculateAverageRating = (productId) => {
         const reviews = JSON.parse(localStorage.getItem(`reviews_${productId}`) || '[]');
         if (reviews.length === 0) return 0;
         const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
         return totalRating / reviews.length;
+    };
+
+    const calculateRecommendation = (products) => {
+        if (products.length === 0) return [];
+
+        const productsWithReviews = products.map(product => {
+            const reviews = JSON.parse(localStorage.getItem(`reviews_${product.id}`) || '[]');
+            return {
+                ...product,
+                averageRating: calculateAverageRating(product.id),
+                reviewCount: reviews.length
+            };
+        });
+
+        const topRated = [...productsWithReviews].sort((a, b) => b.averageRating - a.averageRating)[0];
+        const mostReviewed = [...productsWithReviews].sort((a, b) => b.reviewCount - a.reviewCount)[0];
+        
+        const avgPrice = productsWithReviews.reduce((sum, p) => sum + p.price, 0) / productsWithReviews.length;
+        const closestToAvgPrice = [...productsWithReviews].sort((a, b) => Math.abs(a.price - avgPrice) - Math.abs(b.price - avgPrice))[0];
+        
+        return [topRated, mostReviewed, closestToAvgPrice].filter(Boolean);
     };
 
     const filterAndSortProducts = () => {
@@ -36,7 +57,9 @@ const Catalog = ({ onAddToCart, onAddToWishlist }) => {
             );
         }
 
-        if (selectedCategory !== 'all') {
+        if (selectedCategory === 'recommendation') {
+            filtered = calculateRecommendation(filtered);
+        } else if (selectedCategory !== 'all') {
             filtered = filtered.filter(product => product.category === selectedCategory);
         }
 
@@ -58,7 +81,7 @@ const Catalog = ({ onAddToCart, onAddToWishlist }) => {
                 filtered.sort((a, b) => b.price - a.price);
                 break;
             case 'rating-desc':
-                filtered.sort((a, b) => b.averageRating - a.averageRating); // Сортування по рейтингу
+                filtered.sort((a, b) => b.averageRating - a.averageRating);
                 break;
             default:
                 break;
@@ -93,6 +116,7 @@ const Catalog = ({ onAddToCart, onAddToWishlist }) => {
                         onChange={(e) => setSelectedCategory(e.target.value)}
                     >
                         <option value="all">All categories</option>
+                        <option value="recommendation">⭐Recommendation</option>
                         <option value="t-shirts">T-shirts</option>
                         <option value="pants">Pants</option>
                         <option value="outerwear">Outerwear</option>
